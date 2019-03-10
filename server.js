@@ -3,7 +3,7 @@ const root = process.cwd(),
    express = require('express'),
    fs = require('fs'),
    app = express(),
-   resourcesPath = path.join('', 'src');
+   resourcesPath = path.join('', 'dist');
 
 const global = (function() {
    return this || (0, eval)('this');
