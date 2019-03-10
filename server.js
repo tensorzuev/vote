@@ -18,14 +18,20 @@ console.log('app available on port ' + port);
 
 // websockets
 
-const {createServer} = require('wss')
+const WebSocket = require('ws')
 
 global.currentInfo = {};
 
 var INTERVALS = [];
 let boss;
 
-const wss = createServer(function connectionListener(ws) {
+const wss = new WebSocket.Server({ port: 8080 });
+
+/*.listen(8080, function() {
+   const {address, port} = this.address() // this is the http[s].Server
+   console.log('listening on http://%s:%d (%s)', /::/.test(address) ? '0.0.0.0' : address, port)
+});*/
+wss.on('connection', function connectionListener(ws) {
 
   var id = Math.random();
   clients[id] = {
@@ -45,9 +51,6 @@ const wss = createServer(function connectionListener(ws) {
       handleMessage(JSON.parse(data), id);
    });
 
-}).listen(8080, function() {
-   const {address, port} = this.address() // this is the http[s].Server
-   console.log('listening on http://%s:%d (%s)', /::/.test(address) ? '0.0.0.0' : address, port)
 });
 
 let activeAnswer;
