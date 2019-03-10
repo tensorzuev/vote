@@ -18,14 +18,14 @@ console.log('app available on port ' + port);
 
 // websockets
 
-const WebSocket = require('ws')
+const WebSocket = require('ws');
 
 global.currentInfo = {};
 
 var INTERVALS = [];
 let boss;
 
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({server:expressServer});
 
 /*.listen(8080, function() {
    const {address, port} = this.address() // this is the http[s].Server

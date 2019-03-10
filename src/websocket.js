@@ -1,10 +1,7 @@
 var Socket = {
   init: function() {
 
-    var needPort = location.host.split(':')[1]
-    this.socket = new WebSocket(location.protocol.replace(/^http/, 'ws')+'//'+
-        location.host.split(':')[0] + (needPort ? ':8080' : ''));
-        
+    this.socket = new WebSocket(location.origin.replace(/^http/, 'ws'));
     this.socket.onopen = () => {
         console.log("Соединение установлено.");
     };
