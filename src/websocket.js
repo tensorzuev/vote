@@ -1,6 +1,9 @@
 var Socket = {
   init: function() {
-    this.socket = new WebSocket("ws://localhost:8080");
+
+    var needPort = location.host.split(':')[1]
+    this.socket = new WebSocket(location.protocol.replace(/^http/, 'ws')+'//'+
+        location.host.split(':')[0] + (needPort ? ':8080' : ''));
     this.socket.onopen = () => {
         console.log("Соединение установлено.");
     };
@@ -18,7 +21,6 @@ var Socket = {
     };
     this.socket.onerror = (error) => {
         console.log("Ошибка " + error.message);
-        reject();
     };
   },
 
