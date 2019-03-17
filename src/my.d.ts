@@ -14,5 +14,12 @@ declare type ISlides<T> = {
 
 declare type IPresentation = {
   currentSlide: string;
-  slideControl: any;
+  countClients: number; 
 }
+
+declare type ITypeMsg = {
+  type: string;
+  data: any;
+}
+
+declare type ICallbackMsg = (msg:ITypeMsg)=>void;

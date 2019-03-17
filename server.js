@@ -26,11 +26,6 @@ var INTERVALS = [];
 let boss;
 
 const wss = new WebSocket.Server({server:expressServer});
-
-/*.listen(8080, function() {
-   const {address, port} = this.address() // this is the http[s].Server
-   console.log('listening on http://%s:%d (%s)', /::/.test(address) ? '0.0.0.0' : address, port)
-});*/
 wss.on('connection', function connectionListener(ws) {
 
   var id = Math.random();
@@ -41,10 +36,16 @@ wss.on('connection', function connectionListener(ws) {
   };
   console.log("новое соединение " + id);
 
-//    ws.send(JSON.stringify("2"));
-
    ws.on('close', () => {
+      if (clients[id].answer && activeAnswer[clients[id].answer]) {
+        activeAnswer[clients[id].answer]--;
+        boss.ws.send(JSON.stringify({type: "newanswer", data: {count: activeAnswer}}));
+      }
       delete clients[id];
+
+      if (boss) {
+        boss.ws.send(JSON.stringify({type: "countclients", data: {count: Object.keys(clients).length-1}}));
+      }
    });
 
    ws.on('message', (data) => {
@@ -54,6 +55,7 @@ wss.on('connection', function connectionListener(ws) {
 });
 
 let activeAnswer;
+let descriptionVote;
 
 
 function handleMessage(data, id) {
@@ -62,26 +64,44 @@ function handleMessage(data, id) {
          clients[id].imboss = true;
          boss = clients[id];
          break;
+      case "newclient":
+        clients[id].ws.send(JSON.stringify({type: "newvote", data: descriptionVote}));
+        if (boss) {
+          boss.ws.send(JSON.stringify({type: "countclients", data: {count: Object.keys(clients).length-1}}));
+        }
+        break;
       case "newvote":
 
         activeAnswer = {};
-        data.answers.forEach((el)=>{
-          activeAnswer[el] = 0;
+        data.data.answers.forEach((el)=>{
+          activeAnswer[el.ans] = 0;
         });
+        descriptionVote = data.data;
 
-         for(let i in clients) {
-           if (clients.hasOwnProperty(i)) {
-             clients[i].answer = null;
-             try {
-               clients[i].ws.send(JSON.stringify({type: "newvote", answers: data.answers}));
-             } catch(e) {}
-           }
+        for(let i in clients) {
+         if (clients.hasOwnProperty(i)) {
+           clients[i].answer = null;
+           try {
+             clients[i].ws.send(JSON.stringify({type: "newvote", data: descriptionVote}));
+           } catch(e) {}
          }
-         break;
+        }
+        break;
+      case "endvote":
+        for(let i in clients) {
+         if (clients.hasOwnProperty(i)) {
+           clients[i].answer = null;
+           try {
+             clients[i].ws.send(JSON.stringify({type: "endvote", data: ''}));
+           } catch(e) {}
+         }
+        }
+        break;
       case "answer":
-        clients[id].answer = data.answer;
-        activeAnswer[data.answer]++;
-        boss.ws.send(JSON.stringify({type: "newanswer", count: activeAnswer}));
+        clients[id].answer = data.data.answer;
+        activeAnswer[data.data.answer]++;
+
+        boss.ws.send(JSON.stringify({type: "newanswer", data: {count: activeAnswer}}));
         break;
       default:
          return "wrong request";
