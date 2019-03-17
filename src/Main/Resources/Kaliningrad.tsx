@@ -1,13 +1,17 @@
 import * as React from 'react';
 import {Simple} from '../Slides/Simple';
 import {Voting} from '../Slides/Voting';
+import {First} from '../Slides/First';
 
 let pres:ISlides<IOneSlide> = {
   '1': {
-    control: Simple,
+    control: First,
     props: {
-      title: 'Tensor',
-      description: (<div>Как ускорить идеальный код?<br/> </div>)
+      title: 'Как ускорить идеальный код?',
+      logo: '/resources/logo.png',
+      description: (<div className='accent-block'>Когда микро становится макро</div>),
+      author: 'Зуев Дмитрий',
+      company: 'Компания Тензор'
     },
     next: 'goto'
   },
@@ -119,12 +123,11 @@ let pres:ISlides<IOneSlide> = {
       description: '',
       answers: [
         {ans: 'first', next: 'jsperfvoteresno', description: (<div>
-            screen code 1
+            <img src='/resources/jsperf/code1.png' /> <br /> <br />
           </div>)},
         {ans: 'second', next: 'jsperfvoteresyes', description: (
           <div>
-            screen code 2
-            <img src='/temp.jpg' />
+            <img src='/resources/jsperf/code2.png' /> <br /> <br />
           </div>
         )}
       ]
@@ -134,9 +137,9 @@ let pres:ISlides<IOneSlide> = {
   'jsperfvoteresyes': {
     control: Simple,
     props: {
-      title: 'jsperf.com',
+      title: 'Congratulations!',
       description: (<div>
-          Круто! Угадали
+          <img src='/resources/jsperf/result.png' />
         </div>)
     },
     next: null
@@ -144,9 +147,9 @@ let pres:ISlides<IOneSlide> = {
   'jsperfvoteresno': {
     control: Simple,
     props: {
-      title: 'jsperf.com',
+      title: 'You are loosers :)',
       description: (<div>
-          Loooosers!
+          <img src='/resources/jsperf/result.png' />
         </div>)
     },
     next: null

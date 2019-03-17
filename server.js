@@ -41,6 +41,9 @@ wss.on('connection', function connectionListener(ws) {
         activeAnswer[clients[id].answer]--;
         boss.ws.send(JSON.stringify({type: "newanswer", data: {count: activeAnswer}}));
       }
+      if (clients[id].imboss) {
+        boss = null;
+      }
       delete clients[id];
 
       if (boss) {
@@ -63,9 +66,12 @@ function handleMessage(data, id) {
       case "imboss":
          clients[id].imboss = true;
          boss = clients[id];
+         endvote();
          break;
       case "newclient":
-        clients[id].ws.send(JSON.stringify({type: "newvote", data: descriptionVote}));
+        if (descriptionVote) {
+          clients[id].ws.send(JSON.stringify({type: "newvote", data: descriptionVote}));
+        }
         if (boss) {
           boss.ws.send(JSON.stringify({type: "countclients", data: {count: Object.keys(clients).length-1}}));
         }
@@ -88,14 +94,7 @@ function handleMessage(data, id) {
         }
         break;
       case "endvote":
-        for(let i in clients) {
-         if (clients.hasOwnProperty(i)) {
-           clients[i].answer = null;
-           try {
-             clients[i].ws.send(JSON.stringify({type: "endvote", data: ''}));
-           } catch(e) {}
-         }
-        }
+        endvote();
         break;
       case "answer":
         clients[id].answer = data.data.answer;
@@ -108,6 +107,17 @@ function handleMessage(data, id) {
    }
 }
 
+function endvote() {
+  descriptionVote = null;
+  for(let i in clients) {
+    if (clients.hasOwnProperty(i)) {
+      clients[i].answer = null;
+      try {
+        clients[i].ws.send(JSON.stringify({type: "endvote", data: ''}));
+      } catch(e) {}
+    }
+   }
+}
 
 function stopServers() {
    // closeAllClientConnections(wss);

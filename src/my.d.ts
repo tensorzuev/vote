@@ -12,9 +12,11 @@ declare type ISlides<T> = {
   [propname: string]: T
 }
 
+
 declare type IPresentation = {
   currentSlide: string;
   countClients: number; 
+  className: string;
 }
 
 declare type ITypeMsg = {

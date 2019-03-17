@@ -5,10 +5,12 @@ interface IViewProps {
   slides: ISlides<IOneSlide>
 }
 
+
 export class View extends React.Component<IViewProps, IPresentation> {
   state: IPresentation = {
     currentSlide: '1',
-    countClients: 0
+    countClients: 0,
+    className: 'visible-area'
   }
 
   private webSocketController:WebSocketController = new WebSocketController();
@@ -17,8 +19,16 @@ export class View extends React.Component<IViewProps, IPresentation> {
     if (this.props.slides[this.state.currentSlide].next) {
       this.setState( {
         currentSlide: this.props.slides[this.state.currentSlide].next,
-        countClients: this.state.countClients
+        countClients: this.state.countClients,
+        className: 'hidden-area'
       } );
+      setTimeout(()=>{
+        this.setState( {
+          currentSlide: this.state.currentSlide,
+          countClients: this.state.countClients,
+          className: 'visible-area'
+        } );
+      }, 300);
     }
   }
 
@@ -44,7 +54,8 @@ export class View extends React.Component<IViewProps, IPresentation> {
     if (data.type==='countclients') {
       this.setState({
         currentSlide: this.state.currentSlide,
-        countClients: +data.data.count
+        countClients: +data.data.count,
+        className: this.state.className
       });
     }
   }
@@ -56,11 +67,12 @@ export class View extends React.Component<IViewProps, IPresentation> {
   render () {
     let Control = this.props.slides[this.state.currentSlide].control;
     return (
-      <div onClick={this.openNext}>
-        <div>
-          Visitors: {this.state.countClients}
+      <div onClick={this.openNext} className='slide-container'>
+        <div className='count-of-visitors'>
+          Всего слушателей: {this.state.countClients}
         </div>
-        <Control
+        <Control key={this.state.currentSlide} 
+            className={this.state.className}
             webSocketController={this.webSocketController}
             callback={this.callbackChoice}
             {... this.props.slides[this.state.currentSlide].props} />

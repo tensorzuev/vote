@@ -1,5 +1,121 @@
-@import "theme";
+@import "theme.less";
+
+html {
+  height: 100%;
+}
 
 body {
-  color: @baseColor;
+  height: 100%;
+  color: @text-color;
+  font-family: @font-family;
+  font-size: @font-size;
+}
+
+h1 {
+  font-size: @title-font-size;
+  text-align: center;
+  padding: 0.67em 0;
+  margin: 0;
+}
+
+.slide-container {
+  box-shadow: 0 0 10px inset #000000;
+  height: 100%;
+}
+
+.presentation-container {
+  height: 100%;
+}
+
+.text-in-slide{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.first-logo {
+  width: 235px;
+  height: 200px;
+  margin: 100px auto;
+}
+
+.accent-block {
+  background: @accent-color;
+  font-size: @subtitle-font-size;
+  border-radius: @accent-border-radius;
+  color: @accent-opposite-color;
+  display: inline;
+  padding: @accent-padding;
+}
+
+.author-block {
+  font-size: @subtitle-font-size;
+  text-align: right;
+  padding-right: @font-size;
+  margin-top: @font-size;
+}
+
+.company-block {
+  color: @deactive-color;
+  text-align: right;
+  padding-right: @font-size;
+}
+
+
+.count-of-visitors{
+  position: absolute;
+  bottom: @font-size;
+  left: @font-size;
+}
+
+
+.content-area{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 150px);
+  flex-direction: column;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.hidden-area {
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+.visible-area {
+  opacity: 1;
+  transition: all 0.5s;
+}
+
+.answers-block {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.one-column-answer {
+  text-align: center;
+
+}
+
+.column-result {
+  width: 50px;
+  height: 300px;
+  display: flex;
+  align-items: flex-end;
+  margin: 0 10px;
+}
+
+.count-voters {
+  width: 100%;
+  color: @accent-opposite-color;
+  text-align: center;
+
+  transition: all 0.1s;
+  background: @accent-color;
 }
