@@ -48,16 +48,24 @@ export class Vote extends React.Component<HashMap<any>, HashMap<any>> {
     }
 
     render () {
-        let array = this.state.answers.map((answer:HashMap<string>) => {
-          let ans = this.onAnswerClick.bind(this, answer);
-          return ( <div onClick={ans}>{answer.ans}</div> );
-        });
+      let height = this.state.answers.length ? 100 / this.state.answers.length : 0;
+      let array = this.state.answers.map((answer:HashMap<string>) => {
+        let ans = this.onAnswerClick.bind(this, answer);
+        let style = {
+          height: height+'%'
+        };
+        return ( <div onClick={ans} 
+                      style={style}
+                      className='client-answer'>{answer.ans}</div> );
+      });
 
-        return (
-          <div>{this.state.title} <br />
-          {this.state.description} <br /><br /><br />
+      return (
+        <div className='client-answers'>{this.state.title} <br />
+        {this.state.description} <br /><br /><br />
+        <div className='answers-block'>
           {array}
-          </div>
-        );
+        </div>
+        </div>
+      );
     }
 }
