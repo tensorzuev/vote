@@ -4,7 +4,7 @@ export class Voting extends React.Component<HashMap<any>, HashMap<any>> {
 
   state:HashMap<any> = {
     results: {},
-    timer: 45,
+    timer: 10,
     allVoters: 0
   };
   private interval:number = null;
