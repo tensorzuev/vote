@@ -9,33 +9,42 @@ export class Voting extends React.Component<HashMap<any>, HashMap<any>> {
   };
   private interval:number = null;
 
-  constructor(props:HashMap<any>) {
-    super(props);
-    this.messageCallback = this.messageCallback.bind(this);
+  finishVoting() {
+    clearInterval(this.interval);
+    this.interval = null;
+
+    let max = -1, winner, next;
+    this.props.answers.forEach((ans:any)=>{
+      if (this.state.results[ans.ans] > max || max===-1) {
+        max = this.state.results[ans.ans] || 0;
+        winner = ans.ans;
+        next = ans.next;
+      }
+    });
+    this.props.webSocketController.send({type:'endvote', data: {winner: winner}});
+    this.props.callback({
+      next: next
+    });
+  }
+
+  startVoting(props:HashMap<any>) {
     props.webSocketController.registerCallback(this.messageCallback);
     props.webSocketController.send({type:'newvote', data: {
       title: props.title,
       description: props.description,
       answers: props.answers
     }});
+  }
+
+  constructor(props:HashMap<any>) {
+    super(props);
+    this.finishVoting = this.finishVoting.bind(this);
+    this.messageCallback = this.messageCallback.bind(this);
+    this.startVoting(props);
+
     this.interval = setInterval(()=>{
       if (this.state.timer < 1) {
-
-        clearInterval(this.interval);
-        this.interval = null;
-
-        let max = -1, winner, next;
-        props.answers.forEach((ans:any)=>{
-          if (this.state.results[ans.ans] > max || max===-1) {
-            max = this.state.results[ans.ans] || 0;
-            winner = ans.ans;
-            next = ans.next;
-          }
-        });
-        this.props.webSocketController.send({type:'endvote', data: {winner: winner}});
-        this.props.callback({
-          next: next
-        });
+        this.finishVoting();
       } else {
         this.setState({
           results: this.state.results,
@@ -62,6 +71,12 @@ export class Voting extends React.Component<HashMap<any>, HashMap<any>> {
     }
   }
 
+  componentDidUpdate(prevProps:HashMap<any>) {
+    if (prevProps.webSocketController !== this.props.webSocketController) {
+      this.startVoting(this.props);
+    }
+  }
+
   componentWillUnmount() {
     this.props.webSocketController.unRegisterCallback(this.messageCallback);
   }
@@ -80,7 +95,7 @@ export class Voting extends React.Component<HashMap<any>, HashMap<any>> {
     let second = this.props.answers[1].ans;
     
     return (
-      <div className={this.props.className + ' height-100'}>
+      <div className={this.props.className + ' height-100'} onClick={this.finishVoting}>
         <h1>{this.props.title}</h1>
         <div className='content-area'>
         
@@ -88,7 +103,7 @@ export class Voting extends React.Component<HashMap<any>, HashMap<any>> {
             { this.props.answers.map((answer:HashMap<string>)=>{
               
               return ( <div className='one-column-answer'>                
-                {answer.ans} 
+                {answer.ans} <br />
                 {answer.description}
                 </div> );
             }) }
@@ -108,7 +123,7 @@ export class Voting extends React.Component<HashMap<any>, HashMap<any>> {
                 </div>
           </div>
           
-          <div className='author-block'>Осталось времени: {this.state.timer} </div>
+          <div className="bottom-abs-text">Осталось времени: {this.state.timer} </div>
         </div>
       </div>
     )

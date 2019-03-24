@@ -13,23 +13,52 @@ export class View extends React.Component<IViewProps, IPresentation> {
     className: 'visible-area'
   }
 
-  private webSocketController:WebSocketController = new WebSocketController();
+  private webSocketController:WebSocketController = null;
+
+  openSlide(nextSlide:string) {
+    this.setState( {
+      currentSlide: nextSlide,
+      countClients: this.state.countClients,
+      className: 'hidden-area'
+    } );
+    setTimeout(()=>{
+      this.setState( {
+        currentSlide: nextSlide,
+        countClients: this.state.countClients,
+        className: 'visible-area'
+      } );
+    }, 300);
+  }
 
   openNext() {
-    if (this.props.slides[this.state.currentSlide].next) {
-      this.setState( {
-        currentSlide: this.props.slides[this.state.currentSlide].next,
-        countClients: this.state.countClients,
-        className: 'hidden-area'
-      } );
-      setTimeout(()=>{
-        this.setState( {
-          currentSlide: this.state.currentSlide,
-          countClients: this.state.countClients,
-          className: 'visible-area'
-        } );
-      }, 300);
+    let nextSlide = this.props.slides[this.state.currentSlide].next;
+    if (nextSlide) {
+      history.pushState({}, '', '/admin.html?slide=' + nextSlide);
+      this.openSlide(nextSlide);
     }
+  }
+
+  connect() {
+    this.webSocketController = new WebSocketController();
+    this.webSocketController.registerCallback(this.messageCallback);
+    this.webSocketController.send({type:'imboss', data: ''});
+  }
+
+  disconnect() {
+    if (this.webSocketController) {
+      this.webSocketController.unRegisterCallback(this.messageCallback);
+      this.webSocketController = null;
+    }
+  }
+
+  getSlideFromUrl():string {
+    let searchStr = location.search;
+    let slide = searchStr.split('slide=')[1];
+    return slide || '1';
+  }
+
+  onPopState() {
+    this.openSlide(this.getSlideFromUrl());
   }
 
   constructor (props:IViewProps) {
@@ -39,8 +68,11 @@ export class View extends React.Component<IViewProps, IPresentation> {
     this.messageCallback = this.messageCallback.bind(this);
     this.callbackChoice = this.callbackChoice.bind(this);
 
-    this.webSocketController.registerCallback(this.messageCallback);
-    this.webSocketController.send({type:'imboss', data: ''});
+    this.connect();
+    this.onPopState = this.onPopState.bind(this);
+    window.onpopstate = this.onPopState;
+    
+    this.state.currentSlide = this.getSlideFromUrl();
   }
 
   callbackChoice(dataCallback:HashMap<any>) {
@@ -57,6 +89,10 @@ export class View extends React.Component<IViewProps, IPresentation> {
         countClients: +data.data.count,
         className: this.state.className
       });
+    } else if (data.type === 'error') {
+      this.disconnect();
+      this.connect();
+      this.forceUpdate();
     }
   }
 

@@ -108,9 +108,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'jsperf.com',
-      description: (<div>
-          <img src='/resources/mesure.gif' height='500px'/>
-        </div>)
+      description: (<img src='/resources/mesure.gif' className="img-with-text"/>)
     },
     next: 'jsperfvote'
   },
@@ -120,10 +118,10 @@ let pres:ISlides<IOneSlide> = {
       title: 'Какой вариант эффективнее?',
       description: '',
       answers: [
-        {ans: 'first', next: 'jsperfvoteresno', description: (<div>
+        {ans: 'Первый', next: 'jsperfvoteresno', description: (<div>
             <img src='/resources/jsperf/code1.png' /> <br /> <br />
           </div>)},
-        {ans: 'second', next: 'jsperfvoteresyes', description: (
+        {ans: 'Второй', next: 'jsperfvoteresyes', description: (
           <div>
             <img src='/resources/jsperf/code2.png' /> <br /> <br />
           </div>
@@ -135,20 +133,16 @@ let pres:ISlides<IOneSlide> = {
   'jsperfvoteresyes': {
     control: Simple,
     props: {
-      title: 'Congratulations!',
-      description: (<div>
-          <img src='/resources/jsperf/result.png' />
-        </div>)
+      title: 'Мои поздравления!',
+      description: (<img src='/resources/jsperf/result.png' className="img-with-text"/>)
     },
     next: 'gtmetrix'
   },
   'jsperfvoteresno': {
     control: Simple,
     props: {
-      title: 'You are loosers :)',
-      description: (<div>
-          <img src='/resources/jsperf/result.png' />
-        </div>)
+      title: 'Не угадали :)',
+      description: (<img src='/resources/jsperf/result.png' className="img-with-text"/>)
     },
     next: 'gtmetrix'
   },
@@ -156,9 +150,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'gtmetrix.com',
-      description: (<div>
-          <img src='/resources/gtpromo.png' />
-        </div>)
+      description: (<img src='/resources/gtpromo.png' className="img-with-text"/>)
     },
     next: 'template1'
   },
@@ -166,9 +158,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Шаблонизатор',
-      description: (<div>
-          <img src='/resources/buildings.gif' />
-        </div>)
+      description: (<img src='/resources/buildings.gif' className="img-with-text"/>)
     },
     next: 'template2'
   },
@@ -176,9 +166,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Шаблонизатор',
-      description: (<div>
-          <img src='/resources/t/thtml.png' />
-        </div>)
+      description: (<img src='/resources/t/thtml.png' className="img-with-text"/>)
     },
     next: 'template3'
   },
@@ -186,9 +174,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Шаблонизатор',
-      description: (<div>
-          <img src='/resources/t/tjs.png' />
-        </div>)
+      description: (<img src='/resources/t/tjs.png'  className="img-with-text"/>)
     },
     next: 'template4'
   },
@@ -196,19 +182,19 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Дерево элементов',
-      description: (<div>
-          <img src='/resources/sheme.png' />
-        </div>)
+      description: (<img src='/resources/sheme.png'  className="img-with-text"/>)
     },
     next: 'template5'
   },
   'template5': {
-    control: Simple,
+    control: Empty,
     props: {
       title: 'Reduce+Concat VERSUS Foreach+Push',
-      description: (<div>
-          Reduce - перебирает элементы и возвращает результат <br />
-          Foreach - перебирает элементы и нам нужно хранить результат в замыкании
+      description: (<div className="content-area">
+          <div className="accent-block">Reduce</div> 
+          <div>перебирает элементы и возвращает результат<br /><br /><br /></div>
+          <div className="accent-block">Foreach</div>
+          <div>перебирает элементы и нам нужно хранить результат в замыкании<br /><br /><br /></div>
         </div>)
     },
     next: 'versus1'
@@ -219,13 +205,10 @@ let pres:ISlides<IOneSlide> = {
       title: 'Какой вариант эффективнее?',
       description: '',
       answers: [
-        {ans: 'Reduce+Concat', next: 'versus1no', description: (<div>
-            <img src='/resources/jsperf/vs1_1.png' /> <br /> <br />
-          </div>)},
+        {ans: 'Reduce+Concat', next: 'versus1no', description: (<img src='/resources/jsperf/vs1_1.png' 
+        className='source-in-vote'/>)},
         {ans: 'Foreach+Push', next: 'versus1yes', description: (
-          <div>
-            <img src='/resources/jsperf/vs1_2.png' /> <br /> <br />
-          </div>
+            <img src='/resources/jsperf/vs1_2.png' className='source-in-vote'/>
         )}
       ]
     },
@@ -234,20 +217,16 @@ let pres:ISlides<IOneSlide> = {
   'versus1yes': {
     control: Simple,
     props: {
-      title: 'Congratulations!',
-      description: (<div>
-          <img src='/resources/jsperf/vs1_res.png' height='600px'/>
-        </div>)
+      title: 'И это правильный ответ!',
+      description: (<img src='/resources/jsperf/vs1_res.png' className="img-with-text"/>)
     },
     next: 'gtvs1_1'
   },
   'versus1no': {
     control: Simple,
     props: {
-      title: 'Failure!',
-      description: (<div>
-          <img src='/resources/jsperf/vs1_res.png' height='600px'/>
-        </div>)
+      title: 'Неверно!',
+      description: (<img src='/resources/jsperf/vs1_res.png' className="img-with-text"/>)
     },
     next: 'gtvs1_1'
   },
@@ -255,9 +234,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Reduce+Concat',
-      description: (<div>
-          <img src='/resources/gt/vs1_1.png'/>
-        </div>)
+      description: (<img src='/resources/gt/vs1_1.png' className="img-with-text"/>)
     },
     next: 'gtvs1_2'
   },
@@ -265,9 +242,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Foreach+Push',
-      description: (<div>
-          <img src='/resources/gt/vs1_2.png'/>
-        </div>)
+      description: (<img src='/resources/gt/vs1_2.png' className="img-with-text"/>)
     },
     next: 'gtvs1_3'
   },
@@ -275,9 +250,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Foreach+Push + ЭВРИСТИКА',
-      description: (<div>
-          <img src='/resources/gt/code1_3.png'/>
-        </div>)
+      description: (<img src='/resources/gt/code1_3.png' className="img-with-text"/>)
     },
     next: 'gtvs1_4'
   },
@@ -285,9 +258,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Foreach+Push + ЭВРИСТИКА',
-      description: (<div>
-          <img src='/resources/gt/vs1_3.png'/>
-        </div>)
+      description: (<img src='/resources/gt/vs1_3.png' className="img-with-text"/>)
     },
     next: 'gotit'
   },
@@ -295,9 +266,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: ':)',
-      description: (<div>
-          <img src='/resources/gotit.gif'/>
-        </div>)
+      description: (<img src='/resources/gotit.gif' className="img-with-text"/>)
     },
     next: 'gtvs2_1'
   },
@@ -305,9 +274,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Reduce',
-      description: (<div>
-          <img src='/resources/gt/code2_1.png'/>
-        </div>)
+      description: (<img src='/resources/gt/code2_1.png' className="img-with-text"/>)
     },
     next: 'gtvs2_1_r'
   },
@@ -315,9 +282,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Reduce',
-      description: (<div>
-          <img src='/resources/gt/vs2_1.png'/>
-        </div>)
+      description: (<img src='/resources/gt/vs2_1.png' className="img-with-text"/>)
     },
     next: 'gtvs2_2'
   },
@@ -325,9 +290,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Foreach',
-      description: (<div>
-          <img src='/resources/gt/code2_2.png'/>
-        </div>)
+      description: (<img src='/resources/gt/code2_2.png' className="img-with-text"/>)
     },
     next: 'gtvs2_2_r'
   },
@@ -335,9 +298,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Foreach',
-      description: (<div>
-          <img src='/resources/gt/vs2_2.png'/>
-        </div>)
+      description: (<img src='/resources/gt/vs2_2.png' className="img-with-text"/>)
     },
     next: 'regexp'
   },
@@ -345,9 +306,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'RegExp VERSUS indexOf',
-      description: (<div>
-          <img src='/resources/regexppic.png' height='500px'/>
-        </div>)
+      description: (<img src='/resources/regexppic.png' className="img-with-text"/>)
     },
     next: 'versus3'
   },
@@ -357,14 +316,10 @@ let pres:ISlides<IOneSlide> = {
       title: 'Какой вариант эффективнее?',
       description: '',
       answers: [
-        {ans: 'RegExp', next: 'regexpresult', description: (<div>
-            <img src='/resources/regexp/regcode.png' /> <br /> <br />
-          </div>)},
-        {ans: 'IndexOf', next: 'regexpresultyes', description: (
-          <div>
-            <img src='/resources/regexp/indexofcode.png' /> <br /> <br />
-          </div>
-        )}
+        {ans: 'RegExp', next: 'regexpresult', description: (<img src='/resources/regexp/regcode.png'
+          className='source-in-vote'/>)},
+        {ans: 'IndexOf', next: 'regexpresultyes', description: (<img src='/resources/regexp/indexofcode.png'
+          className='source-in-vote'/>)}
       ]
     },
     next: null
@@ -373,19 +328,15 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Это же было просто?!',
-      description: (<div>
-          <img src='/resources/regexp/res.png'/>
-        </div>)
+      description: (<img src='/resources/regexp/res.png'  className="img-with-text"/>)
     },
     next: 'regexprchrom'
   },
   'regexpresultyes': {
     control: Simple,
     props: {
-      title: 'Easy!',
-      description: (<div>
-          <img src='/resources/regexp/res.png'/>
-        </div>)
+      title: 'Правильно!',
+      description: (<img src='/resources/regexp/res.png' className="img-with-text"/>)
     },
     next: 'regexprchrom'
   },
@@ -393,9 +344,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Chrome DevTools - RegExp',
-      description: (<div>
-          <img src='/resources/regexp/regch.png'/>
-        </div>)
+      description: (<img src='/resources/regexp/regch.png' className="img-with-text"/>)
     },
     next: 'regexprchrom2'
   },
@@ -403,9 +352,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Chrome DevTools - IndexOf',
-      description: (<div>
-          <img src='/resources/regexp/indexofch.png'/>
-        </div>)
+      description: (<img src='/resources/regexp/indexofch.png' className="img-with-text"/>)
     },
     next: 'mem'
   },
@@ -413,9 +360,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Relax',
-      description: (<div>
-          <img src='/resources/model.gif'/>
-        </div>)
+      description: (<img src='/resources/model.gif' className="img-with-text"/>)
     },
     next: 'gtmetreg'
   },
@@ -423,9 +368,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'RegExp:: GtMetrix - real time',
-      description: (<div>
-          <img src='/resources/regexp/reggt.png'/>
-        </div>)
+      description: (<img src='/resources/regexp/reggt.png' className="img-with-text"/>)
     },
     next: 'gtmetind'
   },
@@ -433,9 +376,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'IndexOf:: GtMetrix - real time',
-      description: (<div>
-          <img src='/resources/regexp/indexofgt.png'/>
-        </div>)
+      description: (<img src='/resources/regexp/indexofgt.png' className="img-with-text"/>)
     },
     next: 'travolta'
   },
@@ -443,9 +384,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'WTF???',
-      description: (<div>
-          <img src='/resources/travolta.gif'/>
-        </div>)
+      description: (<img src='/resources/travolta.gif' className="img-with-text"/>)
     },
     next: 'versus4'
   },
