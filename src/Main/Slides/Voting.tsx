@@ -4,7 +4,7 @@ export class Voting extends React.Component<HashMap<any>, HashMap<any>> {
 
   state:HashMap<any> = {
     results: {},
-    timer: 45,
+    timer: 450,
     allVoters: 0
   };
   private interval:number = null;
@@ -67,31 +67,45 @@ export class Voting extends React.Component<HashMap<any>, HashMap<any>> {
   }
 
   render () {
+    /* first version supports only two variants 
+     * */
+    let resultMap = this.props.answers.map((answer:HashMap<string>)=>{
+      let styles:React.CSSProperties = {
+        width: this.state.results[answer.ans]?((this.state.results[answer.ans]*100/this.state.allVoters) + "%"):'0%'
+      };
+      return styles;
+    });
+
+    let first = this.props.answers[0].ans;
+    let second = this.props.answers[1].ans;
+    
     return (
       <div className={this.props.className + ' height-100'}>
         <h1>{this.props.title}</h1>
         <div className='content-area'>
-          <div className='accent-block'>{this.props.description}</div>
         
           <div className='answers-block'>
             { this.props.answers.map((answer:HashMap<string>)=>{
-              let styles:React.CSSProperties = {
-                height: this.state.results[answer.ans]?((this.state.results[answer.ans]*100/this.state.allVoters) + "%"):'0%'
-              };
-
-              return ( <div className='one-column-answer'> 
-                {answer.description}
-
+              
+              return ( <div className='one-column-answer'>                
                 {answer.ans} 
-                <div className='column-result'>
-                  <div className='count-voters' style={ styles }>
-                    {this.state.results[answer.ans]?this.state.results[answer.ans]:''} 
-                  </div>
-                </div>
-                
-                
+                {answer.description}
                 </div> );
             }) }
+          </div>
+          <div className='results-block'>
+              
+                <div className='column-result column-result-first'>
+                  <div className='count-voters' style={ resultMap[0] }>
+                    <span className='count-voters-text'>{this.state.results[first]?this.state.results[first]:''}</span>
+                  </div>
+                </div>
+                <img src='/resources/quest.png' className='vote-quest-img'/>
+                <div className='column-result column-result-second'>
+                  <div className='count-voters' style={ resultMap[1] }>
+                    <span className='count-voters-text'>{this.state.results[second]?this.state.results[second]:''}</span>
+                  </div>
+                </div>
           </div>
           
           <div className='author-block'>Осталось времени: {this.state.timer} </div>

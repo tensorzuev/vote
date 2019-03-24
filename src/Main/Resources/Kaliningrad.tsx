@@ -2,6 +2,8 @@ import * as React from 'react';
 import {Simple} from '../Slides/Simple';
 import {Voting} from '../Slides/Voting';
 import {First} from '../Slides/First';
+import {JustPic} from '../Slides/JustPic';
+import {Empty} from '../Slides/Empty';
 
 let pres:ISlides<IOneSlide> = {
   '1': {
@@ -18,22 +20,19 @@ let pres:ISlides<IOneSlide> = {
   'goto': {
     control: Simple,
     props: {
-      title: 'We have a feedback',
-      description: (<div>
-        <img src='/resources/qr-code.gif' /> 
-        <p>https://zuev-vote.herokuapp.com</p>
+      title: 'Мы подготовили кое-что особенное',
+      description: (<div className="height-100 width-100">
+        <img src='/resources/qr-code.gif' className="img-with-text"/> 
+        <p className="bottom-abs-text">https://zuev-vote.herokuapp.com</p>
       </div>)
     },
     next: '2'
   },
   '2': {
-    control: Simple,
+    control: JustPic,
     props: {
       title: 'О компании',
-      description: (<div>Наши online-продукты обслуживают более <br />
-      1 500 000 <br />
-      клиентов 
-      </div>)
+      description: (<img src='/resources/about.jpg' className="width-100"/>)
     },
     next: 'worksheme'
   },
@@ -41,9 +40,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Мы максимально переиспользуем код',
-      description: (<div>
-          <img src='/resources/tree.jpg' height='500px'/>
-      </div>)
+      description: (<img src='/resources/tree.jpg' className="img-with-text"/>)
     },
     next: 'platformcode'
   },
@@ -51,9 +48,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Код платформы используется везде',
-      description: (<div>
-        <img src='/resources/every.gif' height='500px'/>
-      </div>)
+      description: (<img src='/resources/every.gif' className="img-with-text"/>)
     },
     next: 'performance'
   },
@@ -61,22 +56,18 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Загрузка страницы - комплекс',
-      description: (<div>
-        <img src='/resources/question.gif' height='300px'/>
-      </div>)
+      description: (<img src='/resources/question.gif' className="img-with-text"/>)
     },
     next: '3'
   },
   '3': {
-    control: Simple,
+    control: Empty,
     props: {
       title: 'Специфика замеров',
-      description: (<div>
-          <ul>
-            <li>chrome dev tools</li>
-            <li>https://jsperf.com/testbyzuev1</li>
-            <li>https://gtmetrix.com/</li>
-          </ul>
+      description: (<div className="content-area">
+            <div className='accent-block'>chrome dev tools</div>
+            <div className='accent-block'>https://jsperf.com/testbyzuev1</div>
+            <div className='accent-block'>https://gtmetrix.com/</div> 
         </div>)
     },
     next: 'devtools1'
@@ -84,11 +75,10 @@ let pres:ISlides<IOneSlide> = {
   'devtools1': {
     control: Voting,
     props: {
-      title: 'Do you know about DevTools?',
-      description: 'it\'s part of browser chrome :)',
+      title: 'Вы знаете о Chrome DevTools?',
       answers: [
-        {ans: 'Yes', next: 'devtoolsyes'},
-        {ans: 'No', next: 'devtoolsno'}
+        {ans: 'Да', next: 'devtoolsyes'},
+        {ans: 'Нет', next: 'devtoolsno'}
       ]
     },
     next: null
@@ -96,10 +86,8 @@ let pres:ISlides<IOneSlide> = {
   'devtoolsyes': {
     control: Simple,
     props: {
-      title: 'Большинство знает, не будем заморачиваться',
-      description: (<div>
-          <img src='/resources/devtools.png' height='500px'/>
-        </div>)
+      title: 'Большинство знает, а значит, пропустим',
+      description: (<img src='/resources/devtools.png' className="img-with-text"/>)
     },
     next: 'jsperf'
   },

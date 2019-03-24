@@ -4,6 +4,10 @@ html {
   height: 100%;
 }
 
+p {
+  margin: 0;
+}
+
 body {
   height: 100%;
   color: @text-color;
@@ -14,18 +18,30 @@ body {
 h1 {
   font-size: @title-font-size;
   text-align: center;
-  padding: 0.67em 0;
+  padding: 4vw 0;
   margin: 0;
 }
 
+.abs-title{
+  position: absolute;
+  width: 100%;
+  top: 0;
+}
+
 .slide-container {
-  box-shadow: 0 0 10px inset #000000;
   height: 100%;
 }
 
 .presentation-container {
   height: 100%;
 }
+
+.width-100 {
+  width: 100%;
+}
+
+
+
 
 .text-in-slide{
   display: flex;
@@ -35,9 +51,8 @@ h1 {
 }
 
 .first-logo {
-  width: 235px;
-  height: 200px;
-  margin: 100px auto;
+  width: 12vw;
+  margin: 8vw auto 0;
 }
 
 .accent-block {
@@ -45,21 +60,19 @@ h1 {
   font-size: @subtitle-font-size;
   border-radius: @accent-border-radius;
   color: @accent-opposite-color;
-  display: inline;
+  width: fit-content;
   padding: @accent-padding;
+  margin: 0 auto @font-size;
 }
 
 .author-block {
   font-size: @subtitle-font-size;
-  text-align: right;
-  padding-right: @font-size;
   margin-top: @font-size;
 }
 
 .company-block {
   color: @deactive-color;
-  text-align: right;
-  padding-right: @font-size;
+  font-size: @font-size-small;
 }
 
 
@@ -74,8 +87,20 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100% - 150px);
+  height: calc(100% - 17vw);
   flex-direction: column;
+  text-align: center;
+}
+
+.img-with-text {
+  height: calc(100% - @title-font-size);
+}
+
+.bottom-abs-text {
+  bottom: @font-size;
+  position: absolute;
+  text-align: center;
+  width: 100%;
 }
 
 .height-100 {
@@ -93,29 +118,58 @@ h1 {
 }
 
 .answers-block {
-  margin-top: 20px;
   display: flex;
   justify-content: center;
 }
 
 .one-column-answer {
   text-align: center;
+  width: 45vw;
+}
 
+.results-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.vote-quest-img {
+  width: 12vw;
+  margin: 0 -2vw;
+  z-index: 2;
 }
 
 .column-result {
-  width: 50px;
-  height: 300px;
+  height: 50px;
+  width: calc(50% - 6vw);
   display: flex;
-  align-items: flex-end;
-  margin: 0 10px;
+}
+
+.column-result-first {
+  justify-content: flex-end;
+}
+
+.column-result-first .count-voters {
+  border-radius: 25px 0 0 25px ;
+}
+
+.column-result-second {
+  justify-content: flex-start;
+}
+
+.column-result-second .count-voters {
+  border-radius:  0 25px 25px 0;
 }
 
 .count-voters {
-  width: 100%;
+  height: 100%;
   color: @accent-opposite-color;
   text-align: center;
-
   transition: all 0.1s;
   background: @accent-color;
+}
+
+.count-voters-text {
+  line-height: 50px;
 }
