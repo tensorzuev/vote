@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {WebSocketController} from '../WebSocketController';
 import "./Vote.less";
+import {Start} from "./Start";
 
 let defaultTitle:string = 'Please, waiting while we\'re opening voting';
 
@@ -9,7 +10,8 @@ export class Vote extends React.Component<HashMap<any>, HashMap<any>> {
     state:HashMap<any> = {
         answers: [],
         title: defaultTitle,
-        description: ''
+        description: '',
+        voting: false
     };
 
     constructor(props:HashMap<any>) {
@@ -26,19 +28,25 @@ export class Vote extends React.Component<HashMap<any>, HashMap<any>> {
       this.webSocketController.send({type:'answer', data: {answer: answer.ans}});
       this.setState({
         answers: [],
-        title: 'Thank you for your choice',
-        description: ''
+        title: (<p><span className='client-accent'>Спасибо за Ваш выбор</span><br /><br />
+         Если вы хотите изменить решение, 
+        <br /> обновите страницу. <br />
+        Оставляйте Ваш телефон активным до конца голосования.</p>),
+        description: '',
+        voting: true
       });
     }
 
     messageCallback(data:ITypeMsg) {
       if (data.type==='newvote') {
+        data.data.voting = true;
         this.setState(data.data);
       } else if (data.type === 'endvote') {
         this.setState({
           answers: [],
           title: defaultTitle,
-          description: ''
+          description: '',
+          voting: false
         });
       }
     }
@@ -48,24 +56,26 @@ export class Vote extends React.Component<HashMap<any>, HashMap<any>> {
     }
 
     render () {
-      let height = this.state.answers.length ? 100 / this.state.answers.length : 0;
-      let array = this.state.answers.map((answer:HashMap<string>) => {
-        let ans = this.onAnswerClick.bind(this, answer);
-        let style = {
-          height: height+'%'
-        };
-        return ( <div onClick={ans} 
-                      style={style}
-                      className='client-answer'>{answer.ans}</div> );
-      });
-
-      return (
-        <div className='client-answers'>{this.state.title} <br />
-        {this.state.description} <br /><br /><br />
-        <div className='answers-block'>
-          {array}
-        </div>
-        </div>
-      );
+      if (this.state.voting) {
+        let array = this.state.answers.map((answer:HashMap<string>) => {
+          let ans = this.onAnswerClick.bind(this, answer);
+          return ( <div onClick={ans} 
+                        className='client-answer'>{answer.ans}</div> );
+        });
+  
+        return (
+          <div className='client-body'>
+            <p>{this.state.title}</p>
+            <div className='answers-block'>
+              {array}
+            </div>
+          </div>
+        );
+      } else {
+        return (<div className='client-body'>
+            <Start />
+        </div>);
+      }
+      
     }
 }

@@ -1,31 +1,66 @@
-@import "../Main/theme.less";
-html {
-    height: 100%;
-}
-
-body {
-    height: 100%;
-    color: @text-color;
-    font-family: @font-family;
-    font-size: @font-size;
-}
+@import "../theme.less";
+@import "../default.less";
   
 
-.client-answers {
+.client-body {
+    height: 100%;
     text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
+    justify-content: center;
+    font-size: @title-font-size;
+    color: @deactive-color;
+}
+.client-logo {
+    width: 25vw;
+}
+.client-qr {
+    width: 55vw;
+}
+.client-cross {
+    position: absolute;
+    top: @title-font-size;
+    right: @title-font-size;
+    font-size: 10vw;
+    font-family: serif;
+}
+
+.client-share-qr {
+    text-decoration: underline;
 }
 
 .client-answer {
-    border: 1px solid @accent-color;
-    color: @accent-color;
-    padding: @font-size;
-    margin: 5px;
+    background: @accent-color;
+    width: 90vw;
+    border-radius: @font-size;
+    color: @accent-opposite-color;
+    padding: @font-size 0;
+    margin: @font-size 0;
 }
 
-.answers-block {
-    height: 80vh;
-    width: 100%;
+.client-accent {
+    color: @text-color;
+}
+
+@media (orientation: landscape) {
+    .client-body {
+        font-size: @font-size;
+    }
+    .client-qr {
+        width: 55vh;
+    }
+    .client-cross {
+        font-size: 5vw;
+    }
+
+    .answers-block {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .client-answer {
+        width: 35vw;
+        margin: @font-size;
+    }
 }
