@@ -9,7 +9,7 @@ let pres:ISlides<IOneSlide> = {
   '1': {
     control: First,
     props: {
-      title: 'Как ускорить идеальный код?',
+      title: 'Оптимизации в JavaScript',
       logo: '/resources/logo.png',
       description: (<div className='accent-block'>Когда микро становится макро</div>),
       author: 'Зуев Дмитрий',
@@ -24,6 +24,26 @@ let pres:ISlides<IOneSlide> = {
       description: (<div className="height-100 width-100">
         <img src='/resources/qr-code.gif' className="img-with-text"/> 
         <p className="bottom-abs-text">https://zuev-vote.herokuapp.com</p>
+      </div>)
+    },
+    next: 'goto2'
+  },
+  'goto2': {
+    control: Simple,
+    props: {
+      title: 'https://zuev-vote.herokuapp.com',
+      description: (<div className="height-100 width-100">
+        <p>Если вдруг, у вас нет считывателя QR-кода</p>
+      </div>)
+    },
+    next: 'goto3'
+  },
+  'goto3': {
+    control: Simple,
+    props: {
+      title: 'https://clck.ru/FV2fS',
+      description: (<div className="height-100 width-100">
+        <p>Если вдруг, вам лень печатать большой URL</p>
       </div>)
     },
     next: '2'
