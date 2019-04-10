@@ -66,7 +66,7 @@ function handleMessage(data, id) {
       case "imboss":
          clients[id].imboss = true;
          boss = clients[id];
-         endvote();
+         boss.ws.send(JSON.stringify({type: "newanswer", data: {count: activeAnswer}}));
          break;
       case "newclient":
         if (descriptionVote) {
@@ -78,6 +78,9 @@ function handleMessage(data, id) {
         break;
       case "newvote":
 
+        if (JSON.stringify(descriptionVote) === JSON.stringify(data.data)) {
+          return;
+        }
         activeAnswer = {};
         data.data.answers.forEach((el)=>{
           activeAnswer[el.ans] = 0;
