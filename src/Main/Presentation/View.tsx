@@ -5,10 +5,12 @@ interface IViewProps {
   slides: ISlides<IOneSlide>
 }
 
+const firstSlide = '1';
+
 
 export class View extends React.Component<IViewProps, IPresentation> {
   state: IPresentation = {
-    currentSlide: '1',
+    currentSlide: firstSlide,
     countClients: 0,
     className: 'visible-area'
   }
@@ -42,6 +44,9 @@ export class View extends React.Component<IViewProps, IPresentation> {
     this.webSocketController = new WebSocketController();
     this.webSocketController.registerCallback(this.messageCallback);
     this.webSocketController.send({type:'imboss', data: ''});
+    if (this.state.currentSlide === firstSlide) {
+      this.webSocketController.send({type:'endvote', data: {}});  
+    }
   }
 
   disconnect() {
@@ -68,11 +73,11 @@ export class View extends React.Component<IViewProps, IPresentation> {
     this.messageCallback = this.messageCallback.bind(this);
     this.callbackChoice = this.callbackChoice.bind(this);
 
+    this.state.currentSlide = this.getSlideFromUrl();
     this.connect();
     this.onPopState = this.onPopState.bind(this);
     window.onpopstate = this.onPopState;
     
-    this.state.currentSlide = this.getSlideFromUrl();
   }
 
   callbackChoice(dataCallback:HashMap<any>) {
