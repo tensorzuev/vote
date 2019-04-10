@@ -115,12 +115,7 @@ let pres:ISlides<IOneSlide> = {
     control: Simple,
     props: {
       title: 'Не знаете? Рили?',
-      description: (<div>
-        Это средства разработки от хрома.
-        2-3 слайда. Как открыть.
-        как запустить профилировщик.
-        Как померять память.
-        </div>)
+      description: (<img src='/resources/devtools.png' className="img-with-text"/>)
     },
     next: 'jsperf'
   },
