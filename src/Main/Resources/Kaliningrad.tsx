@@ -134,11 +134,11 @@ let pres:ISlides<IOneSlide> = {
       description: '',
       answers: [
         {ans: 'Первый', next: 'jsperfvoteresno', description: (<div>
-            <img src='/resources/jsperf/code1.png' /> <br /> <br />
+            <img src='/resources/jsperf/code1.png' className='source-in-vote'/> <br /> <br />
           </div>)},
         {ans: 'Второй', next: 'jsperfvoteresyes', description: (
           <div>
-            <img src='/resources/jsperf/code2.png' /> <br /> <br />
+            <img src='/resources/jsperf/code2.png' className='source-in-vote'/> <br /> <br />
           </div>
         )}
       ]

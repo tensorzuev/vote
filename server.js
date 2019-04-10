@@ -67,6 +67,7 @@ function handleMessage(data, id) {
          clients[id].imboss = true;
          boss = clients[id];
          boss.ws.send(JSON.stringify({type: "newanswer", data: {count: activeAnswer}}));
+         boss.ws.send(JSON.stringify({type: "countclients", data: {count: Object.keys(clients).length-1}}));
          break;
       case "newclient":
         if (descriptionVote) {
