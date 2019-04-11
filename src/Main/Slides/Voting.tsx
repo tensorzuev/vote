@@ -41,6 +41,8 @@ export class Voting extends React.Component<HashMap<any>, HashMap<any>> {
     this.finishVoting = this.finishVoting.bind(this);
     this.messageCallback = this.messageCallback.bind(this);
     this.startVoting(props);
+    this.kd = this.kd.bind(this);
+    document.addEventListener('keydown', this.kd);
 
     this.interval = setInterval(()=>{
       if (this.state.timer < 1) {
@@ -71,6 +73,13 @@ export class Voting extends React.Component<HashMap<any>, HashMap<any>> {
     }
   }
 
+  kd(e:any) {
+    if (e.key === 'PageDown') {
+      this.finishVoting();
+    } else if (e.key === 'PageUp') {
+    }
+  }
+
   componentDidUpdate(prevProps:HashMap<any>) {
     if (prevProps.webSocketController !== this.props.webSocketController) {
       this.startVoting(this.props);
@@ -79,6 +88,7 @@ export class Voting extends React.Component<HashMap<any>, HashMap<any>> {
 
   componentWillUnmount() {
     this.props.webSocketController.unRegisterCallback(this.messageCallback);
+    document.removeEventListener('keydown', this.kd);
   }
 
   render () {
