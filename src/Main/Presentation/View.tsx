@@ -40,6 +40,14 @@ export class View extends React.Component<IViewProps, IPresentation> {
     }
   }
 
+  kd(e:any) {
+    if (e.key === 'PageDown') {
+      this.openNext();
+    } else if (e.key === 'PageUp') {
+      history.back();
+    }
+  }
+
   connect() {
     this.webSocketController = new WebSocketController();
     this.webSocketController.registerCallback(this.messageCallback);
@@ -68,6 +76,7 @@ export class View extends React.Component<IViewProps, IPresentation> {
 
   constructor (props:IViewProps) {
     super(props);
+    this.kd = this.kd.bind(this);
     this.openNext = this.openNext.bind(this);
 
     this.messageCallback = this.messageCallback.bind(this);
@@ -77,7 +86,7 @@ export class View extends React.Component<IViewProps, IPresentation> {
     this.connect();
     this.onPopState = this.onPopState.bind(this);
     window.onpopstate = this.onPopState;
-    
+    document.addEventListener('keydown', this.kd);
   }
 
   callbackChoice(dataCallback:HashMap<any>) {
